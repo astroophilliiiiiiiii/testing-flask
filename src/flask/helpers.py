@@ -677,3 +677,32 @@ class _CollectErrors:
         """Raise if any errors were collected."""
         if self.errors:
             raise BaseExceptionGroup(message, self.errors)
+
+
+def format_error_response(
+    error: t.Any,
+    status_code: int = 400,
+    details: t.Any = None,
+) -> dict[str, t.Any]:
+    """Return a standard JSON‑serializable error payload.
+
+    Parameters
+    ----------
+    error: Any
+        The error message or exception to be stringified.
+    status_code: int, default 400
+        HTTP status code that should accompany the error.
+    details: Any, optional
+        Optional extra information (commonly a dict) describing the error.
+
+    Returns
+    -------
+    dict
+        A dictionary with keys ``error``, ``status``, and ``details``.
+    """
+    return {
+        'error': str(error),
+        'status': int(status_code),
+        'details': details,
+    }
+
