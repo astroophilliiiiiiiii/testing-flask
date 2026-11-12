@@ -677,3 +677,28 @@ class _CollectErrors:
         """Raise if any errors were collected."""
         if self.errors:
             raise BaseExceptionGroup(message, self.errors)
+
+
+def format_api_response(
+    data: t.Any = None,
+    status_code: int = 200,
+    message: str = 'OK',
+) -> dict[str, t.Any]:
+    """Return a standardised API response dictionary.
+
+    The returned dictionary always contains the keys:
+    * ``data`` – the payload (can be ``dict``, ``list``, ``str`` or ``None``)
+    * ``status`` – the HTTP status code (default ``200``)
+    * ``message`` – a human readable status message (default ``'OK'``)
+
+    Args:
+        data: The response payload. Any JSON‑serialisable type such as ``dict``,
+            ``list``, ``str`` or ``None``.
+        status_code: HTTP status code to include in the response.
+        message: Human readable message describing the status.
+
+    Returns:
+        dict: A dictionary with ``data``, ``status`` and ``message`` keys.
+    """
+    return {'data': data, 'status': status_code, 'message': message}
+
